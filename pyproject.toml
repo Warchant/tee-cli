@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tee-cli"
-version = "0.1.0"
+version = "0.2.0"
 description = ""
 authors = ["Bohdan Vanieiev <warchantua@gmail.com>"]
 readme = "README.md"

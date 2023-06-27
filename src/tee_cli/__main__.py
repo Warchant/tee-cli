@@ -1,5 +1,6 @@
 import argparse
 import logging
+import shlex
 import subprocess
 import sys
 from typing import List
@@ -13,9 +14,8 @@ def run(cmd: List[str], logfile: str):
         # then start a process
         p = subprocess.Popen(
             cmd,
-            # use bufsize and universal_newlines to read in utf-8
-            bufsize=1,
-            universal_newlines=True,
+            text=True,
+            shell=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             encoding="utf-8",
@@ -45,9 +45,9 @@ def main(argv: List[str] = sys.argv[1:]):
     parser.add_argument("command", help="Command to run")
 
     args, extras = parser.parse_known_args(args=argv)
-
+    cmd = shlex.split(args.command)
     try:
-        run([args.command] + extras, args.output)
+        run(cmd + extras, args.output)
     except Exception as e:
         logging.error(e)
         sys.exit(1)
